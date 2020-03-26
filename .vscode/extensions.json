@@ -1,0 +1,10 @@
+{
+	"recommendations": [
+		"james-yu.latex-workshop",
+		"ms-azuretools.vscode-docker",
+		"christian-kohler.path-intellisense",
+		"ms-python.python",
+		"mechatroner.rainbow-csv",
+		"streetsidesoftware.code-spell-checker",
+	]
+}

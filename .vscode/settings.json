@@ -1,0 +1,21 @@
+{
+  "latex-workshop.docker.enabled": true,
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "editor.wordWrap": "on",
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "report.aux": true,
+    "report.bbl": true,
+    "report.blg": true,
+    "report.fdb_latexmk": true,
+    "report.fls": true,
+    "report.log": true,
+    "report.out": true,
+    "report.synctex.gz": true,
+  },
+}
