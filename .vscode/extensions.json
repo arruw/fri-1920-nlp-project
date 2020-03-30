@@ -1,9 +1,10 @@
 {
 	"recommendations": [
-		"james-yu.latex-workshop",
 		"ms-azuretools.vscode-docker",
+		"ms-vsliveshare.vsliveshare-pack",
+		"ms-python.anaconda-extension-pack",
+		"james-yu.latex-workshop",
 		"christian-kohler.path-intellisense",
-		"ms-python.python",
 		"mechatroner.rainbow-csv",
 		"streetsidesoftware.code-spell-checker",
 	]
