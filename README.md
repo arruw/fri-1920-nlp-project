@@ -13,6 +13,9 @@ TODO
 # Create local Conda environment and install required depandencies
 $ make conda-install
 
+# Export Conda depandencies
+$ make conda-export
+
 # Download and extract dataset into ./dataset
 $ make dataset-download
 
