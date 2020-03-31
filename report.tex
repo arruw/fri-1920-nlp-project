@@ -11,6 +11,8 @@
 \usepackage{url}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{float}
 
 %% Package options:
 %% Short version: "hyperref" and "submission" are the defaults.
@@ -98,6 +100,7 @@ First, we read a paper \cite{asghar}, which mostly focuses on data preprocessing
 
 Most of the approaches take advantage of machine learning models, while \cite{sweeney} also tried predicting sentiment with lexicons. \cite{biyani} divided the classification problem into several binary classifications, where \cite{ding} used multi-class classification approach. Machine learning models used for classification ranged from Naïve Bayes \cite{c_sentinews}, Support Vector Machines \cite{tang}, to neural networks \cite{jebbara} and transformers \cite{yang}.
 There were also a few novel approaches. \cite{jebbara} created custom sentiment embeddings, \cite{wallaart} took the ontology approach, where they transformed words into aspects and classified sentiment based on domain specific rules. \cite{guha} used a special form of clustering instead of word embeddings. \cite{hercig} approached the problem with unsupervised methods. Intel's NLP architect, which is based on \cite{mamou}, uses semi-supervised learning, where a domain specific opinion lexicon is automatically created and can be then manually corrected if needed.
+
 Besides \cite{c_sentinews} we also reviewed another lexicon approach on Slovene texts \cite{kadunc}. We have not had the time to go through the doctoral dissertation \cite{bucar_phd}, but we intend to use it for further guidance in our research project.
 
 
@@ -114,12 +117,21 @@ The corpus we will use is the SentiCoref 1.0 \cite{c_senticoref} which consists 
 
 Most of the annotated sentiment in database is tagged as neutral; the distribution for entities is following: 30 Very negative, 1801 Negative, 10869 Neutral, 1705 Positive and 24 Very positive.
 
+\begin{figure}[H]
+\includegraphics[width=0.5\textwidth]{resources/sentiment_distributions.png}
+\centering
+\label{fig:sentiment-distribution}
+\caption{Sentiment distribution compared to the entity type. Note that frequencies are in logarithmic scale.}
+\end{figure}
+
 \section{Project idea}
 At the moment we have limited knowledge regarding machine learning models used for advanced language processing. We have therefore decided that we will come to the best options regarding preprocessing, feature extraction, modelling and evaluation through experimental testing. We intend to implement most of the perspective methods studied in related works and will try to develop a few of our own solutions in each of the steps mentioned above.
 
 Our goal is to first build a simple model, so we get familiar with the data and algorithms used, and then improve every process in the pipeline to achieve best results possible.
 
-We will initially use less preprocessed text, as that appeared to yield better results in Slovene texts. We aim to extract the local context of an entity with taking into account a fixed amount of tokens in its neighborhood. Bigrams and word embeddings appeared to be useful for evaluating sentiment in previous research, so we will use them as well. We will use Slovene lexicons to establish a benchmark, and compare them to simpler models, such as Naive Bayes, first. Most of the previous papers used accuracy and F-score for evaluating their results. However we are concerned about the distribution of our sentiment classes, where very polar classes represent a very small number of all cases. We aim to improve our results throughout development, with experiments, as we gain more knowledge about our dataset and language processing procedures.
+We will initially use less preprocessed text, as that appeared to yield better results in Slovene texts. We aim to extract the local context of an entity with taking into account a fixed amount of tokens in its neighborhood. Bigrams and word embeddings appeared to be useful for evaluating sentiment in previous research, so we will use them as well. We will use Slovene lexicons to establish a benchmark, and compare them to simpler models, such as Naive Bayes, first. Most of the previous papers used accuracy and F-score for evaluating their results. However we are concerned about the distribution of our sentiment classes, where very polar classes represent a very small number of all cases. 
+
+We aim to improve our results throughout development, with experiments, as we gain more knowledge about our dataset and language processing procedures.
 
 \subsection{Preprocessing}
 \begin{itemize}
@@ -163,7 +175,7 @@ We will initially use less preprocessed text, as that appeared to yield better r
 \begin{itemize}
   \item What is the proper amount of text preprocessing?
   \item How should we evaluate local context of an entity?
-  \item Is our data large enough for deep learning and transformer models?
+  \item Is our dataset large enough for deep learning and transformer models?
   \item How important are the very polar sentiment classes, which are very small?
 \end{itemize}
 
