@@ -36,7 +36,7 @@ import pandas as pd
 from matplotlib import pyplot as plt
 import seaborn as sns
 df = pd.DataFrame(nouns, columns=["Type", "Sentiment level"])
-g = sns.FacetGrid(df, col="Type", col_order=["LOC", "ORG", "PER"], sharex=True, sharey=True)
-g = g.map(plt.hist, "Sentiment level", bins=[1,2,3,4,5,6], edgecolor="w", align="mid", log=True)
+g = sns.FacetGrid(df, row="Type", row_order=["LOC", "ORG", "PER"], sharex=True, sharey=True)
+g = g.map(plt.hist, "Sentiment level", bins=[1,2,3,4,5,6], edgecolor="w", align="mid", log=True, orientation="horizontal")
 plt.savefig('./resources/sentiment_distributions.png')
 plt.show()
