@@ -118,10 +118,10 @@ The corpus we will use is the SentiCoref 1.0 \cite{c_senticoref} which consists 
 Most of the annotated sentiment in database is tagged as neutral; the distribution for entities is following: 30 Very negative, 1801 Negative, 10869 Neutral, 1705 Positive and 24 Very positive.
 
 \begin{figure}[H]
-\includegraphics[width=0.5\textwidth]{resources/sentiment_distributions.png}
+\includegraphics[width=0.3\textwidth]{resources/sentiment_distributions.png}
 \centering
 \label{fig:sentiment-distribution}
-\caption{Sentiment distribution compared to the entity type. Note that frequencies are in logarithmic scale.}
+\caption{Sentiment distribution compared to the entity type. Note that frequencies are in a logarithmic scale.}
 \end{figure}
 
 \section{Project idea}
@@ -135,8 +135,7 @@ We aim to improve our results throughout development, with experiments, as we ga
 
 \subsection{Preprocessing}
 \begin{itemize}
-  \item Parsing initial data
-  \item Tokenization
+  \item Parsing initial data, tokenization
   \item Punctuation and capitalization processing
   \item Part of speech tagging
   \item Lemmatization
@@ -145,7 +144,6 @@ We aim to improve our results throughout development, with experiments, as we ga
 
 \subsection{Data inspection}
 \begin{itemize}
-  \item Average sentence and word length
   \item Class distribution among entities
   \item Source and domain bias
 \end{itemize}
