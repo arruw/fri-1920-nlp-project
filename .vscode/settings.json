@@ -20,5 +20,5 @@
   },
   "python.terminal.activateEnvironment": true,
   "python.terminal.activateEnvInCurrentTerminal": true,
-  "python.pythonPath": ".env/bin/python3",
+  "python.pythonPath": ".env/bin/python",
 }

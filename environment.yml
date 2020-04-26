@@ -65,5 +65,15 @@ dependencies:
   - wrapt=1.12.1=py38h7b6447c_1
   - xz=5.2.4=h14c3975_4
   - zlib=1.2.11=h7b6447c_3
+  - pip:
+    - click==7.1.1
+    - joblib==0.14.1
+    - morfessor==2.0.6
+    - nltk==3.5
+    - polyglot==16.7.4
+    - pycld2==0.41
+    - pyicu==2.4.3
+    - regex==2020.4.4
+    - tqdm==4.45.0
 prefix: ./.env
 

@@ -1,9 +1,9 @@
 import os
 from operator import itemgetter
 from pprint import pprint
-from utils.common import read_tokens, group_by
-
-def extract_labeled_nouns(tokens):
+from utils.common import read_tokens, extract_entities, group_by
+  
+def extract_sentiments(tokens):
   nouns = group_by(filter(lambda t: t[3] != '_', tokens), key=itemgetter(6))
   sentiments = []
   for _, noun in nouns:
@@ -12,14 +12,14 @@ def extract_labeled_nouns(tokens):
     sentiment = sentiment[-1]
     sentiments.append((sentiment[3][0:3], int(sentiment[4].split(' - ')[0])))
   return sentiments
-  
+
 nouns = []
 for file in os.listdir('./dataset'):
   tokens = read_tokens(os.path.join('./dataset', file))
-  nouns += extract_labeled_nouns(tokens)
+  nouns += extract_sentiments(tokens)
 
 # Numbers are a bit smaller then what is reported in the report.
-# extract_labeled_nouns should be fixed.
+# extract_sentiments should be fixed.
 print("=== Fine grained ===")
 stats_fine = [(x[0], len(x[1])) for x in group_by(nouns, key=itemgetter(0, 1))]
 pprint(stats_fine)
