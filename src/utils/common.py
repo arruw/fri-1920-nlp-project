@@ -3,21 +3,31 @@ from typing import List, Tuple, Dict, Set
 from nltk.stem import PorterStemmer
 
 class Entity:
-  def __init__(self, entityId: int, entityType: str, sentiment: int):
+  def __init__(self, entityId: int):
     self.id: int = entityId
-    self.type: str = entityType
+    self.freq: int = 0
+    self.type: str = None
     self.substrings: List[Tuple[int, int]] = []
-    self.sentiment: int = sentiment
+    self.sentiment: int = None
     self._nameParts: Set[str] = []
     self._coref: str = None
 
-  def addNamePart(self, part: str, coref):
+  def _addNamePart(self, part: str, coref):
     if self._coref == None or self._coref == coref:
       self._coref = coref
       self._nameParts.append(part)
 
   def getName(self) -> str:
     return ' '.join(self._nameParts)
+
+  def update(self, token: Tuple):
+    self.freq += 1
+    if token[3] != '_':
+      self.type = token[3][0:3]
+      self._addNamePart(token[2], token[5])
+    self.substrings.append(tuple(map(int, token[1].split('-'))))
+    if token[4] != '_':
+      self.sentiment = int(token[4].split(' - ')[0])
 
 def read_tokens(inputFile):
   with open(inputFile) as f:
@@ -37,12 +47,7 @@ def extract_entities(tokens: List[Tuple]) -> List[Entity]:
     if token[6] == '_': continue
     entityIds = map(lambda x: int(x[2:-1]), token[6].split('|'))
     for entityId in entityIds:
-      entity: Entity = results.get(entityId, Entity(entityId, None, None))
-      if token[3] != '_':
-        entity.type = token[3][0:3]
-        entity.addNamePart(token[2], token[5])
-      entity.substrings.append(tuple(map(int, token[1].split('-'))))
-      if token[4] != '_':
-        entity.sentiment = int(token[4].split(' - ')[0])
+      entity: Entity = results.get(entityId, Entity(entityId))
+      entity.update(token)
       results[entityId] = entity
   return list(results.values())

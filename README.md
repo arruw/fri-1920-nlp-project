@@ -16,7 +16,7 @@ $ sudo apt-get install libicu-dev
 $ make conda-install
 
 # Activate Conda environment in bash
-$ conda activate ./.env
+$ conda activate ./.env 
 
 # Export Conda depandencies
 $ make conda-export

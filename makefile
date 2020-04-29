@@ -1,6 +1,7 @@
 conda-install: are-you-sure
 	conda config --set env_prompt '({name}) '
 	conda env create --prefix=.env
+	.env/bin/polyglot download sentiment2.sl
 
 conda-export: are-you-sure
 	conda env export | sed "s/name.*/name: .env/" | sed "s/prefix.*/prefix: .\/.env/" > environment.yml
