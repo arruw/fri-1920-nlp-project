@@ -1,12 +1,13 @@
 name: .env
 channels:
+  - conda-forge
   - defaults
 dependencies:
   - _libgcc_mutex=0.1=main
   - astroid=2.3.3=py38_0
   - blas=1.0=mkl
-  - ca-certificates=2020.1.1=0
-  - certifi=2019.11.28=py38_1
+  - ca-certificates=2020.4.5.1=hecc5488_0
+  - certifi=2020.4.5.1=py38h32f6830_0
   - cycler=0.10.0=py38_0
   - dbus=1.13.12=h746ee38_0
   - expat=2.2.6=he6710b0_0
@@ -16,8 +17,10 @@ dependencies:
   - gst-plugins-base=1.14.0=hbbd80ab_1
   - gstreamer=1.14.0=hb453b48_1
   - icu=58.2=h9c2bf20_1
+  - imbalanced-learn=0.6.2=py_0
   - intel-openmp=2020.0=166
   - isort=4.3.21=py38_0
+  - joblib=0.14.1=py_0
   - jpeg=9b=h024ee3a_2
   - kiwisolver=1.0.1=py38he6710b0_0
   - lazy-object-proxy=1.4.3=py38h7b6447c_0
@@ -41,7 +44,7 @@ dependencies:
   - ncurses=6.2=he6710b0_0
   - numpy=1.18.1=py38h4f9e942_0
   - numpy-base=1.18.1=py38hde5b4d6_1
-  - openssl=1.1.1f=h7b6447c_0
+  - openssl=1.1.1g=h516909a_0
   - pandas=1.0.3=py38h0573a6f_0
   - pcre=8.43=he6710b0_0
   - pip=20.0.2=py38_1
@@ -50,6 +53,7 @@ dependencies:
   - pyqt=5.9.2=py38h05f1152_4
   - python=3.8.2=hcf32534_0
   - python-dateutil=2.8.1=py_0
+  - python_abi=3.8=1_cp38
   - pytz=2019.3=py_0
   - qt=5.9.7=h5867ecd_1
   - readline=8.0=h7b6447c_0
@@ -67,13 +71,14 @@ dependencies:
   - zlib=1.2.11=h7b6447c_3
   - pip:
     - click==7.1.1
-    - joblib==0.14.1
     - morfessor==2.0.6
     - nltk==3.5
     - polyglot==16.7.4
     - pycld2==0.41
     - pyicu==2.4.3
     - regex==2020.4.4
+    - scikit-learn==0.22.2.post1
+    - sklearn==0.0
     - tqdm==4.45.0
 prefix: ./.env
 

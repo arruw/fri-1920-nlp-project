@@ -79,7 +79,7 @@ def main():
     text = extract_text(docPath)
     entities = extract_entities(read_tokens(docPath))
     for entity in entities:
-      if not entity.sentiment: continue
+      if not entity.sentiment or not entity.type: continue  # skip anomalies
       context_sentences = extract_entity_context(entity, text)
       anchor_scores = reduce(lambda agg, s: agg + get_anchor_scores(entity, s), context_sentences, [])
       sentiment, avg, var = get_sentiment_decision(anchor_scores)
@@ -88,13 +88,16 @@ def main():
         entity.getName(),
         entity.type,
         ' '.join(map(str, context_sentences)),
+        len(anchor_scores),
+        min(anchor_scores),
+        max(anchor_scores),
         avg,
         var,
         sentiment,
         normalize_sentiment(entity.sentiment)
       ))
 
-  df = pd.DataFrame(data, columns=['id', 'name', 'type', 'context', 'avg', 'var', 'predicted', 'actual'])
+  df = pd.DataFrame(data, columns=['id', 'name', 'type', 'context', 'len', 'min', 'max', 'avg', 'var', 'predicted', 'actual'])
   df.to_csv(path_or_buf='cache/baseline.csv', index=False)
 
 if __name__ == "__main__":
