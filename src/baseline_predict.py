@@ -10,9 +10,9 @@ def main():
   df = pd.read_csv('cache/baseline.csv')
   df = df.replace({'type': {'PER': 1, 'ORG': 2, 'LOC': 3}})
 
-  CA_majority = df[['actual', 'id']].groupby(['actual']).agg(['count'])['id']['count'][0]/len(df)
+  CA_majority = df[['sentiment', 'id']].groupby(['sentiment']).agg(['count'])['id']['count'][0]/len(df)
 
-  X_train, X_test, y_train, y_test = train_test_split(df[['type', 'len', 'min', 'max', 'avg', 'var']], df[['actual']], test_size=0.15)
+  X_train, X_test, y_train, y_test = train_test_split(df[['is_person', 'is_sub_obj', 'has_question', 'has_exclaim', 'num_pos', 'num_neg', 'pos_vs_neg', 'len', 'min', 'max', 'avg', 'var']], df[['sentiment']], test_size=0.15)
   # X_train, y_train = sampler().fit_resample(X_train, y_train)
 
   clf = SVC()

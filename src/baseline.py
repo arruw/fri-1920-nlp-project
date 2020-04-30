@@ -5,6 +5,10 @@ from typing import List, Tuple
 from polyglot.text import Text, Sentence, WordList
 from utils.common import extract_entities, read_tokens, Entity
 from functools import reduce
+import nltk
+
+nltk.download('stopwords')
+STOP_WORDS = set(nltk.corpus.stopwords.words('slovene'))
 
 
 def extract_text(inputFilePath: str) -> Text:
@@ -62,6 +66,50 @@ def get_anchor_scores(e: Entity, s: Sentence, before = 8, after = 6) -> List[flo
   return scores
 
 
+def is_question(ss: List[Sentence]) -> bool:
+  return len(list(filter(lambda s: '?' in s.raw, ss))) > 0
+
+
+def is_exclaim(ss: List[Sentence]) -> bool:
+  return len(list(filter(lambda s: '!' in s.raw, ss))) > 0
+
+
+def num_polarity(e: Entity, s: Sentence, polarity_filter: int, before = 3, after = 3) -> int:
+  count = 0
+  rss = list(map(lambda ss: (ss[0]-s.start, ss[1]-s.start),filter(lambda ss: s.start <= ss[0] and ss[1] <= s.end, e.substrings)))
+  
+  # find entity anchor indexes relative to the sentence
+  anchors = [False] * len(s.words)
+  processed = 0
+  start = 0
+  for i, w in enumerate(s.words):
+    if processed == len(rss): break
+    ss = rss[processed]
+    if ss[0] == start and ss[1] == start + len(w):
+      anchors[i] = True
+      processed += 1
+    start += len(w)+1
+
+  words = []
+  # remove stop-words
+  processed = 0
+  for w in s.words:
+    if not anchors[processed] and w.lower() in STOP_WORDS:
+      del anchors[processed]
+    else:
+      words.append(w)
+      processed += 1
+
+  # count polarities in local context
+  for i, a in enumerate(anchors):
+    if not a: continue
+    lower = min(before,i)
+    upper = min(after,len(s.words)-i)
+    count  += sum(map(lambda w: 1 if w.polarity == polarity_filter else 0, WordList(words[-lower+i:i+upper+1], language='sl')))
+
+  return count
+
+
 def get_sentiment_decision(anchor_scores: List[float], t_plus = 0.25, t_minus = -0.25, t_mixed = 0.5) -> int:
   avg = mean(anchor_scores) 
   var = variance(anchor_scores) if len(anchor_scores) > 1 else 0
@@ -81,23 +129,40 @@ def main():
     for entity in entities:
       if not entity.sentiment or not entity.type: continue  # skip anomalies
       context_sentences = extract_entity_context(entity, text)
+
+      # https://pdfs.semanticscholar.org/041e/0a842a9d039c14f03ff21dafa82cca202f50.pdf
       anchor_scores = reduce(lambda agg, s: agg + get_anchor_scores(entity, s), context_sentences, [])
-      sentiment, avg, var = get_sentiment_decision(anchor_scores)
+
+      # https://arxiv.org/pdf/1506.03775.pdf
+      is_person = (entity.type == 'PER')
+      is_sub_obj = not is_person
+      has_question = is_question(context_sentences)
+      has_exclaim = is_exclaim(context_sentences)
+      num_pos = sum(map(lambda s: num_polarity(entity, s, 1), context_sentences))
+      num_neg = sum(map(lambda s: num_polarity(entity, s, -1), context_sentences))
+      pos_vs_neg = (num_pos+1)/(num_neg+1)
+
       data.append((
         f'{docId}-{entity.id}',
         entity.getName(),
         entity.type,
         ' '.join(map(str, context_sentences)),
+        is_person,
+        is_sub_obj,
+        has_question,
+        has_exclaim,
+        num_pos,
+        num_neg,
+        pos_vs_neg,
         len(anchor_scores),
         min(anchor_scores),
         max(anchor_scores),
-        avg,
-        var,
-        sentiment,
+        mean(anchor_scores),
+        variance(anchor_scores) if len(anchor_scores) > 1 else 0,
         normalize_sentiment(entity.sentiment)
       ))
 
-  df = pd.DataFrame(data, columns=['id', 'name', 'type', 'context', 'len', 'min', 'max', 'avg', 'var', 'predicted', 'actual'])
+  df = pd.DataFrame(data, columns=['id', 'name', 'type', 'context', 'is_person', 'is_sub_obj', 'has_question', 'has_exclaim', 'num_pos', 'num_neg', 'pos_vs_neg', 'len', 'min', 'max', 'avg', 'var', 'sentiment'])
   df.to_csv(path_or_buf='cache/baseline.csv', index=False)
 
 if __name__ == "__main__":
