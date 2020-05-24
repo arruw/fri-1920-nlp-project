@@ -9,8 +9,8 @@
 **old** : deprecated, unrunnable files from the project's 1st phase  
 
 
-## Model order
-Run models in the given order:
+## File order
+Run notebooks in the given order:
 ```
 parsing.ipynb
 context_extraction.ipynb
@@ -47,7 +47,7 @@ stanza.download('sl')
 conda install -c conda-forge tensorflow
 conda install keras
 
-# Install h5py for saving and reading Keras models to disk:
+# Install h5py for saving and reading Keras models to disk
 conda install h5py 
 
 # Install Pandas
