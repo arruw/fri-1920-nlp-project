@@ -30,13 +30,14 @@ python code/nn_from_feature_vector.py -train
 
 ## Installation help
 ```bash
-# Download Anaconda (Python 3.7) for your OS [here](https://www.anaconda.com/products/individual)
+# Download Anaconda (Python 3.7) for your OS
+https://www.anaconda.com/products/individual
 
 # Install PyTorch
-$ conda install pytorch torchvision -c pytorch
+conda install pytorch torchvision -c pytorch
 
 # Install Stanza
-$ conda install -c stanfordnlp stanza
+conda install -c stanfordnlp stanza
 
 # Open Python in Anaconda Prompt and download Slovene Stanza modelling
 import stanza
