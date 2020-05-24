@@ -20,15 +20,16 @@ modelling.ipynb
 
 ## Installation help
 ```bash
-# Download Anaconda for your OS [here](https://www.anaconda.com/products/individual)
+# Download Anaconda for your OS
+https://www.anaconda.com/products/individual
 
 # Install PyTorch
-$ conda install pytorch torchvision -c pytorch
+conda install pytorch torchvision -c pytorch
 
 # Install Stanza
-$ conda install -c stanfordnlp stanza
+conda install -c stanfordnlp stanza
 
-#Open Anaconda Prompt and download Slovene Stanza modelling
+# Open Anaconda Prompt and download Slovene Stanza model
 stanza.download('sl')
 
 # Install Keras and Tensorflow (gpu or cpu, doesnt't matter)
