@@ -18,9 +18,19 @@ feature_expansion.ipynb
 modelling.ipynb
 ```
 
+For evaluating saved FFN model run following:
+```
+python code/nn_from_feature_vector.py
+```
+
+To retrain FFN model run following:
+```
+python code/nn_from_feature_vector.py -train
+```
+
 ## Installation help
 ```bash
-# Download Anaconda for your OS [here](https://www.anaconda.com/products/individual)
+# Download Anaconda (Python 3.7) for your OS [here](https://www.anaconda.com/products/individual)
 
 # Install PyTorch
 $ conda install pytorch torchvision -c pytorch
@@ -28,7 +38,8 @@ $ conda install pytorch torchvision -c pytorch
 # Install Stanza
 $ conda install -c stanfordnlp stanza
 
-#Open Anaconda Prompt and download Slovene Stanza modelling
+# Open Python in Anaconda Prompt and download Slovene Stanza modelling
+import stanza
 stanza.download('sl')
 
 # Install Keras and Tensorflow (gpu or cpu, doesnt't matter)

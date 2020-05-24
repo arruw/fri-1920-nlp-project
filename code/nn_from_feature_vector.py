@@ -1,4 +1,5 @@
 import numpy as np
+import sys
 from keras.preprocessing import sequence
 from keras.preprocessing.text import text_to_word_sequence
 
@@ -66,6 +67,8 @@ if __name__ == '__main__':
                                                                                                        X_val.shape))
 
     train = False
+    if sys.argv[-1] == "-train":
+        train = True
 
     if train:
         model_ffn = Sequential()
