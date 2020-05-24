@@ -1,5 +1,6 @@
 import numpy as np
 import sys
+import matplotlib.pyplot as plt
 from keras.preprocessing import sequence
 from keras.preprocessing.text import text_to_word_sequence
 
@@ -10,20 +11,21 @@ from keras.layers.embeddings import Embedding
 from keras.layers.convolutional import Conv1D, MaxPooling1D
 import pandas as pd
 
+from sklearn import svm, datasets
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import f1_score
+from sklearn.metrics import f1_score, confusion_matrix, ConfusionMatrixDisplay
 
 model_folder = "models/"
 
 
-def save_model(name):
+def save_model(model, name):
     # serialize model to JSON
-    model_json = model_ffn.to_json()
+    model_json = model.to_json()
     with open(model_folder + name + ".json", "w") as json_file:
         json_file.write(model_json)
     # serialize weights to HDF5
-    model_ffn.save_weights(model_folder + name + ".h5")
+    model.save_weights(model_folder + name + ".h5")
     print("Saved model to disk")
 
 
@@ -75,9 +77,9 @@ if __name__ == '__main__':
         model_ffn.add(Dense(250, activation='relu', input_dim=X_train.shape[1]))
         model_ffn.add(Dense(3, activation='softmax'))
         model_ffn.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['categorical_accuracy'])
-        history_ffn = model_ffn.fit(X_train, y_train, epochs=30, batch_size=50, verbose=2)
+        history_ffn = model_ffn.fit(X_train, y_train, epochs=10, batch_size=50, verbose=2)
 
-        save_model("ffn")
+        save_model(model_ffn, "ffn")
 
     else:
         model_ffn = load_model("ffn")
@@ -95,3 +97,19 @@ if __name__ == '__main__':
 
     f1_weighted = f1_score(y_test, y_predictions, average='weighted')
     print("F1 weighted score: " + str(f1_weighted))
+
+
+    # Calculate and show confusion matrix
+    cmat = False
+    if sys.argv[-1] == "-cmat":
+        cmat = True
+
+    if cmat:
+        cmat = confusion_matrix(y_test, y_predictions, normalize="true")
+        print(cmat)
+        disp = ConfusionMatrixDisplay(confusion_matrix=cmat, display_labels=["negative", "neutral", "positive"])
+        disp = disp.plot()
+
+        plt.xlabel('Predicted')
+        plt.ylabel('True')
+        plt.show()
