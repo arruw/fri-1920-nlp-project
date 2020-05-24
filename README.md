@@ -3,12 +3,11 @@
 - Draft preview: [here](https://www.overleaf.com/8497658145vrdhbgxccgsd)
 
 ## Folder structure
-```
 **code** : IPython Notebooks and Python files
 **data** : required datasets and saved pickle DataFrames for faster execution
 **models** : saved Neural Net Models 
 **old** : deprecated, unrunnable files from the project's 1st phase
-```
+
 
 ## Model order
 Run models in the given order:
