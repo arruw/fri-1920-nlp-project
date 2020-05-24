@@ -30,4 +30,14 @@ $ conda install -c stanfordnlp stanza
 
 #Open Anaconda Prompt and download Slovene Stanza modelling
 stanza.download('sl')
+
+# Install Keras and Tensorflow (gpu or cpu, doesnt't matter)
+conda install -c conda-forge tensorflow
+conda install keras
+
+# Install h5py for saving and reading Keras models to disk:
+conda install h5py 
+
+# Install Pandas
+conda install -c anaconda pandas
 ```
