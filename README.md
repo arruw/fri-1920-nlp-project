@@ -1,32 +1,34 @@
 # Aspect-based sentiment analysis
 - Authors: Žan Jaklič, Iztok Ramovš, Matjaž Mav
-- Draft preview: [here](https://www.overleaf.com/read/qrxfxxwggtpj)
+- Draft preview: [here](https://www.overleaf.com/8497658145vrdhbgxccgsd)
 
 ## Folder structure
 ```
-TODO
+**code**: IPython Notebooks and Python files
+**data**: required datasets and saved pickle DataFrames for faster execution
+**models**: saved Neural Net Models 
+**old**: deprecated, unrunnable files from the project's 1st phase
 ```
 
-## Helper commands
+## Model order
+Run models in the given order:
+```
+parsing.ipynb
+context_extraction.ipynb
+feature_expansion.ipynb
+modelling.ipynb
+```
+
+## Installation help
 ```bash
-# Install specific dependencies
-$ sudo apt-get install libicu-dev
+# Download Anaconda for your OS [here](https://www.anaconda.com/products/individual)
 
-# Create local Conda environment and install required depandencies
-$ make conda-install
+# Install PyTorch
+$ conda install pytorch torchvision -c pytorch
 
-# Activate Conda environment in bash
-$ conda activate ./.env 
+# Install Stanza
+$ conda install -c stanfordnlp stanza
 
-# Export Conda depandencies
-$ make conda-export
-
-# Download and extract dataset into ./dataset
-$ make dataset-download
-
-# Clean workspace (delete ignored files)
-$ make git-clean
+#Open Anaconda Prompt and download Slovene Stanza modelling
+stanza.download('sl')
 ```
-
-## Links
-- [Sentiment Analysis: Does Coreference Matter?](https://pdfs.semanticscholar.org/041e/0a842a9d039c14f03ff21dafa82cca202f50.pdf)
